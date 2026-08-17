@@ -1,43 +1,88 @@
-# k8s-Microservice
-# 🚀 Kubernetes Microservice Deployment
+# 🚀 Deploying a Node.js Microservice on Kubernetes
 
-A simple **Node.js microservice deployed on Kubernetes** using Docker, Kubernetes Deployment, Service, health probes, resource management, and multiple Pod replicas.
+This project demonstrates how to containerize a Node.js microservice using Docker and deploy it on a Kubernetes cluster.
 
-This project is designed as a practical demonstration of how to containerize a microservice and deploy it on a Kubernetes cluster.
+The complete workflow covered in this project is:
+
+Developer → GitHub → Docker Build → Docker Hub → Kubernetes Deployment → Pods → Service → Application
 
 ---
 
-## 📌 Project Overview
+## 📌 Project Objective
 
-This project demonstrates the complete flow:
+The objective of this project is to demonstrate a real-world Kubernetes microservice deployment.
+
+The application is a simple Node.js/Express microservice that:
+
+- Runs inside a Docker container
+- Exposes port `3000`
+- Provides a `/` application endpoint
+- Provides a `/health` health-check endpoint
+- Runs with 3 Kubernetes Pod replicas
+- Uses Kubernetes readiness and liveness probes
+- Uses CPU and memory requests/limits
+- Is exposed outside the Kubernetes cluster using a NodePort Service
+- Demonstrates Kubernetes self-healing and scaling
+
+---
+
+# 🏗️ Architecture
 
 ```text
-Developer
-    |
-    v
-Node.js Application
-    |
-    v
-Docker Image
-    |
-    v
-Docker Hub
-    |
-    v
-Kubernetes Deployment
-    |
-    v
-ReplicaSet
-    |
-    +----------------+----------------+
-    |                |                |
-    v                v                v
-  Pod-1            Pod-2            Pod-3
-    |                |                |
-    +----------------+----------------+
-                     |
-                     v
-               Kubernetes Service
-                     |
-                     v
-                NodePort :30080
+                         Developer
+                             |
+                             |
+                         GitHub Repo
+                             |
+                             v
+                    +----------------+
+                    | Docker Build   |
+                    +-------+--------+
+                            |
+                            v
+                    +----------------+
+                    | Docker Image   |
+                    | hello-service  |
+                    +-------+--------+
+                            |
+                            v
+                    +----------------+
+                    |   Docker Hub   |
+                    +-------+--------+
+                            |
+                            |
+                  Kubernetes Server
+                            |
+                            v
+                  +-------------------+
+                  |    Deployment     |
+                  |   replicas: 3     |
+                  +---------+---------+
+                            |
+                            v
+                     +-------------+
+                     |  ReplicaSet |
+                     +------+------+
+                            |
+              +-------------+-------------+
+              |             |             |
+              v             v             v
+           +------+      +------+      +------+
+           | Pod1 |      | Pod2 |      | Pod3 |
+           | :3000|      | :3000|      | :3000|
+           +--+---+      +--+---+      +--+---+
+              |             |             |
+              +-------------+-------------+
+                            |
+                            v
+                    +---------------+
+                    | Kubernetes    |
+                    | Service       |
+                    | NodePort      |
+                    +-------+-------+
+                            |
+                            v
+                    NodeIP:30080
+                            |
+                            v
+                         Client

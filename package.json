@@ -1,0 +1,24 @@
+{
+  "name": "k8s-microservice",
+  "version": "1.0.0",
+  "description": "This project demonstrates how to containerize a Node.js microservice using Docker and deploy it on a Kubernetes cluster.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChitrolyaPradeep/k8s-Microservice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ChitrolyaPradeep/k8s-Microservice/issues"
+  },
+  "homepage": "https://github.com/ChitrolyaPradeep/k8s-Microservice#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
